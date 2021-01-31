@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Event Handler Basics</title>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+
+    <style>
+      .bigger {width:400px; height:600px;}
+      blockquote {font-family: "Architects Daughter", Arial; font-size: 2em; }
+    </style>
+
+  </head>
+  <body>
+
+    <div id="images">
+      <img src="https://picsum.photos/seed/a/200/300" alt="random image" id="image1">
+      <img src="https://picsum.photos/seed/b/200/300" alt="random image" id="image2">
+      <img src="https://picsum.photos/seed/c/200/300" alt="random image" id="image3">
+    </div>
+
+    <blockquote cite="https://quoteinvestigator.com/2014/05/27/rising/">
+      "The greatest glory in living lies not in never falling, but in rising every time we fall." -Nelson Mandela (and others)
+    </blockquote>
+
+    <script>
+      image1.addEventListener("mouseover", mousevent1)
+      image2.addEventListener("mouseover", mousevent1)
+      image3.addEventListener("mouseover", mousevent1)
+      function mousevent1(e) {
+        var item = e.target
+        item.classList.add("bigger")
+      }
+
+      image1.addEventListener("mouseleave", mousevent2)
+      image2.addEventListener("mouseleave", mousevent2)
+      image3.addEventListener("mouseleave", mousevent2)
+      function mousevent2(e) {
+        var item = e.target
+        item.classList.remove("bigger")
+      }
+
+      document.querySelector("blockquote").addEventListener("click", quoteclick)
+      function quoteclick(e) {
+        var item = e.target
+        window.open(item.cite)
+      }
+    </script>
+
+
+  </body>
+</html>
