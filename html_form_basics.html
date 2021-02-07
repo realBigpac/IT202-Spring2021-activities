@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+  </head>
+  <body>
+    <h1>Form Basics</h1>
+
+    <p id="uptonSinclairQuote>
+It is difficult to get a man to understand something, when his salary depends upon his not understanding it! -- Upton Sinclair"
+    </p>
+    <form id="form1"></form>
+      <kbd id="text1">test</kbd>
+      <label><input type="radio" name="radio1">red</label>
+      <label><input type="radio" name="radio1">green</label>
+      <label><input type="radio" name="radio1">blue</label>
+      <select id="select1">
+        <option></option>
+        <option>Mon</option>
+        <option>Wed</option>
+        <option>Fri</option>
+      </select>
+    <textarea id="textarea1">Please provide any additional feedback</textarea>
+    <script>
+    document.querySelector("#text1").innerText = "Michael Wolfe"
+    let buttons = document.querySelectorAll("input")
+    buttons[1].checked = true
+    document.querySelector("#textarea1").innerText = "It is difficult to get a man to understand something, when his salary depends upon his not understanding it! -- Upton Sinclair"
+    select1.addEventListener("oninput", changelog)
+    function changelog(e) {
+      var item = e.target
+      console.log(item)
+    }
+    </script>
+  </body>
+</html>
