@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Employee Search</title>
+    <link rel="manifest" href="./manifest.json">
 
   </head>
   <body>
@@ -79,14 +80,14 @@
           let f = document.querySelector("form");
           let fd = new FormData(f);
           let sp = new URLSearchParams(fd);
-console.log(sp)
+
           let url = endpoint +  "?" + sp.toString();
 
           // fetch
           fetch (url)
             .then ( (response) => { return response.json() })
             .then ( (json) => {
-                document.querySelector("#results").innerText = "Results found: " + data.length;  
+                document.querySelector("#results").innerText = "Results found: " + json.length;  
                 for (let item of json) {
                     // create a paragraph
                     let p = document.createElement ("p");
