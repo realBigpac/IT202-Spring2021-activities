@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart1);
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart1() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "school_type");
+        data.addColumn("number", "count_school_type");
+
+        fetch("https://data.cityofchicago.org/resource/dw27-rash.json?$SELECT=school_type,count(school_type)&$GROUP=school_type")
+        .then( (response) => { return response.json()})
+        .then( (schools) => {
+         schools.forEach( (school) => {
+          data.addRow([school.school_type, parseInt(school.count_school_type)]);
+         })
+         var options = {
+          title: 'City of Chicago school types'
+         };
+
+         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+         chart.draw(data, options);
+        })
+
+      }
+
+      function drawChart2() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "date");
+        data.addColumn("number", "sum_total_doses_cumulative");
+
+        fetch("https://data.cityofchicago.org/resource/553k-3xzc.json?$SELECT=date,sum(total_doses_cumulative)&$GROUP=date&$ORDER=date")
+        .then( (response) => {return response.json()})
+        .then( (dates) => {
+         dates.forEach( (date) => {
+          data.addRow([date.date, parseInt(date.sum_total_doses_cumulative)]);
+         })
+         var options = {
+          title: 'Cumulative number of doses',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+         };
+
+         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+         chart.draw(data, options);
+        })
+       }
+    </script>
+  </head>
+  <body>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
