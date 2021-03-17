@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The webpage speaks</title>
+  </head>
+  <body>
+    <textarea id="input"></textarea>
+    <select id="select">
+      <option></option>
+    </select>
+    <button id="submit" type="button" disabled>Click Me!</button>
+    <script>
+      let synth = window.speechSynthesis;
+      let voices = synth.getVoices();
+      setTimeout ( () => {
+        voices = synth.getVoices();
+        let i = 0;
+        voices.forEach( voice => {
+          let option = document.createElement("option");
+          option.textContent = voice.name + " (" + voices[i].lang + ")";
+          option.value = i;
+          voiceSelect.appendChild(option);
+          i += 1;
+        })
+      }, 1000)
+      let inputTxt = document.querySelector("#input");
+      let voiceSelect = document.querySelector("#select");
+      let submission = document.querySelector("#submit");
+
+      voiceSelect.addEventListener('change',  () => {
+        submission.removeAttribute("disabled");
+      });
+
+      submission.addEventListener('click', () => {
+        let utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+        utterThis.voice = voices[voiceSelect.value];
+        synth.speak(utterThis);
+      });
+    </script>
+  </body>
+</html>
