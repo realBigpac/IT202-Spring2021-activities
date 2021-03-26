@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      let map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 41.872, lng: -87.648 },
+          zoom: 8,
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="coords"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9jYMy_DHqPr3MxqDz78C7-rVhN4WZACI&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+    <script>
+      const coords = document.querySelector("#coords");
+
+      function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude
+        const newPara = document.createElement("p");
+        const center = { lat: latitude, lng: longitude }
+        let d = new Date();
+        const cityCircle = new google.maps.Circle({
+          strokeColor: "#FF0000",
+          fillColor: "#FF0000",
+          map,
+          center: center,
+          radius: 1,
+        });
+
+        newPara.innerText = `{"lat": ${latitude}, "lng": ${longitude}}` + d.toString();
+        coords.prepend(newPara);
+      }
+
+      function error() {
+        coords.innerText = "Unable to retrieve your location";
+      }
+
+      if(!navigator.geolocation) {
+        coords.innerText = "Geolocation is not supported by your browser";
+      } else {
+        navigator.geolocation.watchPosition(success, error);
+      }
+    </script>
+  </body>
+</html>
